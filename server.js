@@ -6,17 +6,17 @@ const cors = require("cors");
 dotenv.config();
 const app = express();
 
-// Middleware
-app.use(express.json()); // ✅ Important for parsing JSON
+// ✅ Middleware
+app.use(express.json());
 app.use(cors());
 
-// Import Routes
+// ✅ Import Routes
 const authRoutes = require("./routes/authRoutes");
 const feedbackRoutes = require("./routes/feedbackRoutes");
 
-// Use Routes
+// ✅ Use Routes
 app.use("/auth", authRoutes);
-app.use("/feedback", feedbackRoutes); // ✅ This ensures feedback routes work
+app.use("/feedback", feedbackRoutes);
 
 // ✅ Add Base Route to Prevent 404 Errors
 app.get("/", (req, res) => {
