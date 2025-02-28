@@ -3,8 +3,31 @@ const { register, getAllUsers, loginUser } = require("../controllers/authControl
 
 const router = express.Router();
 
-router.post("/register", register);
-router.post("/login", loginUser);  // 🔥 Add the login route
-router.get("/users", getAllUsers);
+// ✅ Register a new user
+router.post("/register", async (req, res) => {
+    try {
+        await register(req, res);
+    } catch (error) {
+        res.status(500).json({ message: "Server error during registration", error });
+    }
+});
+
+// ✅ Login user
+router.post("/login", async (req, res) => {
+    try {
+        await loginUser(req, res);
+    } catch (error) {
+        res.status(500).json({ message: "Server error during login", error });
+    }
+});
+
+// ✅ Get all users (Admin or debugging purpose)
+router.get("/users", async (req, res) => {
+    try {
+        await getAllUsers(req, res);
+    } catch (error) {
+        res.status(500).json({ message: "Server error while fetching users", error });
+    }
+});
 
 module.exports = router;
