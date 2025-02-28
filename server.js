@@ -1,24 +1,27 @@
-require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const cors = require("cors");
 
-const connectDB = require("./config/db");
-const authRoutes = require("./routes/authRoutes");
-const feedbackRoutes = require("./routes/feedbackRoutes");
-
+dotenv.config();
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(express.json());  // ✅ Important for parsing JSON
 app.use(cors());
 
-// Connect to Database
-connectDB();
+// Import Routes
+const authRoutes = require("./routes/authRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/feedback", feedbackRoutes);
+// Use Routes
+app.use("/auth", authRoutes);
+app.use("/feedback", feedbackRoutes);  // ✅ This ensures feedback routes work
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    })
+    .catch(error => console.log(error));

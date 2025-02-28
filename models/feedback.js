@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const feedbackSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    email: { type: String, required: true }, // Store email instead of userId
+    username: { type: String },  // Optional: If you want to store username too
     message: { type: String, required: true }
 });
 

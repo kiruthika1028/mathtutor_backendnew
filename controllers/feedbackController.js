@@ -1,17 +1,15 @@
 const Feedback = require("../models/feedback");
-const mongoose = require("mongoose");
 
-// Submit Feedback
+// Submit Feedback (Updated)
 exports.submitFeedback = async (req, res) => {
     try {
-        const { userId, message } = req.body;
+        const { email, username, message } = req.body;
 
-        // Validate userId format
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ message: "Invalid userId format" });
+        if (!email && !username) {
+            return res.status(400).json({ message: "Email or username is required" });
         }
 
-        const feedback = new Feedback({ user: userId, message });
+        const feedback = new Feedback({ email, username, message });
         await feedback.save();
 
         res.status(201).json({ message: "Feedback submitted successfully" });
@@ -20,10 +18,10 @@ exports.submitFeedback = async (req, res) => {
     }
 };
 
-// Get All Feedback
+// Get All Feedback (No Changes)
 exports.getAllFeedback = async (req, res) => {
     try {
-        const feedbacks = await Feedback.find().populate("user", "name email");
+        const feedbacks = await Feedback.find();
         res.status(200).json(feedbacks);
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });

@@ -3,10 +3,7 @@ const { submitFeedback, getAllFeedback } = require("../controllers/feedbackContr
 
 const router = express.Router();
 
-// Route for submitting feedback
-router.post("/submit", submitFeedback);
-
-// Route for getting all feedback
+router.post("/submit", submitFeedback);  // Ensure this is correct
 router.get("/all", getAllFeedback);
 
 module.exports = router;
