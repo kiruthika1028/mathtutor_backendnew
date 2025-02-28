@@ -18,6 +18,11 @@ const feedbackRoutes = require("./routes/feedbackRoutes");
 app.use("/auth", authRoutes);
 app.use("/feedback", feedbackRoutes); // ✅ This ensures feedback routes work
 
+// ✅ Add Base Route to Prevent 404 Errors
+app.get("/", (req, res) => {
+    res.send("Math Tutor Backend is Running! 🚀");
+});
+
 const PORT = process.env.PORT || 5000;
 
 // ✅ Fix MongoDB Connection Warnings
